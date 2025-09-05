@@ -1,0 +1,17 @@
+version: v2
+managed:
+  enabled: true
+  override:
+    - file_option: go_package_prefix
+      value: grpc-encryption-service/internal/pb
+plugins:
+  - local: protoc-gen-go
+    out: internal/
+    opt:
+      - paths=source_relative
+  - local: protoc-gen-go-grpc
+    out: internal/
+    opt:
+      - paths=source_relative    
+inputs:
+  - directory: proto      

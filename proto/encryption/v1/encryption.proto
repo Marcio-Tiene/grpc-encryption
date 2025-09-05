@@ -1,0 +1,70 @@
+syntax = "proto3";
+
+package encryption.v1;
+
+option go_package = "grpc-encryption-service/internal/pb;pb";
+
+
+service EncryptionService {
+  rpc Encrypt(stream EncryptRequest) returns (stream EncryptResponse) {}
+  rpc Decrypt(stream DecryptRequest) returns (stream DecryptResponse) {}
+  rpc GenerateKeyPair(GenerateKeyPairRequest) returns (GenerateKeyPairResponse) {}
+  rpc RotateKeyPair(RotateKeyPairRequest) returns (RotateKeyPairResponse) {}
+}
+
+message RotateKeyPairResponse {
+  string id = 1;
+}
+message GenerateKeyPairResponse {
+  string id = 1;
+}
+message GenerateKeyPairRequest {
+
+  string algorithm = 1;
+
+  int32 key_size = 2;
+}
+
+message RotateKeyPairRequest {
+
+  string key_ref = 1;
+
+  string algorithm = 2;
+  int32 key_size = 3;
+}
+
+message EncryptRequest {
+
+  string key_ref = 1;
+
+  bytes plaintext = 2;
+
+  uint64 seq = 3;
+}
+
+message EncryptResponse {
+  string key_ref = 1;
+
+  bytes ciphertext = 2;
+
+  uint64 seq = 3;
+
+  string error = 4;
+}
+
+message DecryptRequest {
+
+  string key_ref = 1;
+
+  bytes ciphertext = 2;
+  uint64 seq = 3;
+}
+
+message DecryptResponse {
+
+  string key_ref = 1;
+
+  bytes plaintext = 2;
+  uint64 seq = 3;
+  string error = 4;
+}

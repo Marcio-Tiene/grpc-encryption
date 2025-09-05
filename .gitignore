@@ -1,0 +1,49 @@
+# Binaries for programs and plugins
+/bin/
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Test binary, coverage
+*.test
+coverage.out
+*.out
+
+# Output of the go coverage tool
+*.cov
+
+# Dependency directories
+vendor/
+
+# Go workspace
+/pkg/mod/
+
+# Editor and OS files
+.vscode/
+.idea/
+.DS_Store
+*.log
+
+# Environment
+.env
+
+# Build artifacts
+/build/
+/dist/
+
+# Protobuf/gen outputs (if you prefer to regenerate rather than commit generated files)
+# Uncomment if you don't want to commit generated protobuf files
+# internal/pb/*.pb.go
+
+# Buf cache
+.bufbuild/
+
+# Misc
+node_modules/
+
+# JetBrains
+*.iml
+
+# Mac thumbnails
+._*
