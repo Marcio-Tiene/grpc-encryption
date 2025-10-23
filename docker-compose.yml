@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  encryption-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: grpc-encryption-service:latest
+    container_name: encryption-service
+    ports:
+      - "50051:50051"
+    
+
