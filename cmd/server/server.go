@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	encryptionv1 "grpc-encryption-service/internal/encryption/v1"
+	"grpc-encryption-service/internal/infra"
 
 	"log"
 	"net"
@@ -25,7 +26,18 @@ func main() {
 		log.Fatalf("failed to listen: %v", err)
 	}
 
-	srv := grpc.NewServer()
+	// Initialize authentication manager
+	authManager := infra.InitializeAuthManager()
+
+	// Create gRPC server with authentication interceptors
+	srv := grpc.NewServer(
+		grpc.ChainUnaryInterceptor(
+			authManager.GetUnaryInterceptor(),
+		),
+		grpc.ChainStreamInterceptor(
+			authManager.GetStreamInterceptor(),
+		),
+	)
 	healthServer := health.NewServer()
 	fmt.Println(encryptionv1.EncryptionService_ServiceDesc.ServiceName)
 

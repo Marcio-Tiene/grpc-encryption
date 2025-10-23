@@ -222,10 +222,11 @@ func (x *RotateKeyPairRequest) GetKeySize() int32 {
 }
 
 type EncryptRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	KeyRef        string                 `protobuf:"bytes,1,opt,name=key_ref,json=keyRef,proto3" json:"key_ref,omitempty"`
-	Plaintext     []byte                 `protobuf:"bytes,2,opt,name=plaintext,proto3" json:"plaintext,omitempty"`
-	Seq           uint64                 `protobuf:"varint,3,opt,name=seq,proto3" json:"seq,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Data chunk to encrypt
+	Plaintext []byte `protobuf:"bytes,1,opt,name=plaintext,proto3" json:"plaintext,omitempty"`
+	// Sequence number for ordering
+	Seq           uint64 `protobuf:"varint,2,opt,name=seq,proto3" json:"seq,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -260,13 +261,6 @@ func (*EncryptRequest) Descriptor() ([]byte, []int) {
 	return file_encryption_v1_encryption_proto_rawDescGZIP(), []int{4}
 }
 
-func (x *EncryptRequest) GetKeyRef() string {
-	if x != nil {
-		return x.KeyRef
-	}
-	return ""
-}
-
 func (x *EncryptRequest) GetPlaintext() []byte {
 	if x != nil {
 		return x.Plaintext
@@ -283,10 +277,9 @@ func (x *EncryptRequest) GetSeq() uint64 {
 
 type EncryptResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	KeyRef        string                 `protobuf:"bytes,1,opt,name=key_ref,json=keyRef,proto3" json:"key_ref,omitempty"`
-	Ciphertext    []byte                 `protobuf:"bytes,2,opt,name=ciphertext,proto3" json:"ciphertext,omitempty"`
-	Seq           uint64                 `protobuf:"varint,3,opt,name=seq,proto3" json:"seq,omitempty"`
-	Error         string                 `protobuf:"bytes,4,opt,name=error,proto3" json:"error,omitempty"`
+	Ciphertext    []byte                 `protobuf:"bytes,1,opt,name=ciphertext,proto3" json:"ciphertext,omitempty"`
+	Seq           uint64                 `protobuf:"varint,2,opt,name=seq,proto3" json:"seq,omitempty"`
+	Error         string                 `protobuf:"bytes,3,opt,name=error,proto3" json:"error,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -321,13 +314,6 @@ func (*EncryptResponse) Descriptor() ([]byte, []int) {
 	return file_encryption_v1_encryption_proto_rawDescGZIP(), []int{5}
 }
 
-func (x *EncryptResponse) GetKeyRef() string {
-	if x != nil {
-		return x.KeyRef
-	}
-	return ""
-}
-
 func (x *EncryptResponse) GetCiphertext() []byte {
 	if x != nil {
 		return x.Ciphertext
@@ -350,10 +336,11 @@ func (x *EncryptResponse) GetError() string {
 }
 
 type DecryptRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	KeyRef        string                 `protobuf:"bytes,1,opt,name=key_ref,json=keyRef,proto3" json:"key_ref,omitempty"`
-	Ciphertext    []byte                 `protobuf:"bytes,2,opt,name=ciphertext,proto3" json:"ciphertext,omitempty"`
-	Seq           uint64                 `protobuf:"varint,3,opt,name=seq,proto3" json:"seq,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Data chunk to decrypt
+	Ciphertext []byte `protobuf:"bytes,1,opt,name=ciphertext,proto3" json:"ciphertext,omitempty"`
+	// Sequence number for ordering
+	Seq           uint64 `protobuf:"varint,2,opt,name=seq,proto3" json:"seq,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -388,13 +375,6 @@ func (*DecryptRequest) Descriptor() ([]byte, []int) {
 	return file_encryption_v1_encryption_proto_rawDescGZIP(), []int{6}
 }
 
-func (x *DecryptRequest) GetKeyRef() string {
-	if x != nil {
-		return x.KeyRef
-	}
-	return ""
-}
-
 func (x *DecryptRequest) GetCiphertext() []byte {
 	if x != nil {
 		return x.Ciphertext
@@ -411,10 +391,9 @@ func (x *DecryptRequest) GetSeq() uint64 {
 
 type DecryptResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	KeyRef        string                 `protobuf:"bytes,1,opt,name=key_ref,json=keyRef,proto3" json:"key_ref,omitempty"`
-	Plaintext     []byte                 `protobuf:"bytes,2,opt,name=plaintext,proto3" json:"plaintext,omitempty"`
-	Seq           uint64                 `protobuf:"varint,3,opt,name=seq,proto3" json:"seq,omitempty"`
-	Error         string                 `protobuf:"bytes,4,opt,name=error,proto3" json:"error,omitempty"`
+	Plaintext     []byte                 `protobuf:"bytes,1,opt,name=plaintext,proto3" json:"plaintext,omitempty"`
+	Seq           uint64                 `protobuf:"varint,2,opt,name=seq,proto3" json:"seq,omitempty"`
+	Error         string                 `protobuf:"bytes,3,opt,name=error,proto3" json:"error,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -447,13 +426,6 @@ func (x *DecryptResponse) ProtoReflect() protoreflect.Message {
 // Deprecated: Use DecryptResponse.ProtoReflect.Descriptor instead.
 func (*DecryptResponse) Descriptor() ([]byte, []int) {
 	return file_encryption_v1_encryption_proto_rawDescGZIP(), []int{7}
-}
-
-func (x *DecryptResponse) GetKeyRef() string {
-	if x != nil {
-		return x.KeyRef
-	}
-	return ""
 }
 
 func (x *DecryptResponse) GetPlaintext() []byte {
@@ -492,29 +464,25 @@ const file_encryption_v1_encryption_proto_rawDesc = "" +
 	"\x14RotateKeyPairRequest\x12\x17\n" +
 	"\akey_ref\x18\x01 \x01(\tR\x06keyRef\x12\x1c\n" +
 	"\talgorithm\x18\x02 \x01(\tR\talgorithm\x12\x19\n" +
-	"\bkey_size\x18\x03 \x01(\x05R\akeySize\"Y\n" +
-	"\x0eEncryptRequest\x12\x17\n" +
-	"\akey_ref\x18\x01 \x01(\tR\x06keyRef\x12\x1c\n" +
-	"\tplaintext\x18\x02 \x01(\fR\tplaintext\x12\x10\n" +
-	"\x03seq\x18\x03 \x01(\x04R\x03seq\"r\n" +
-	"\x0fEncryptResponse\x12\x17\n" +
-	"\akey_ref\x18\x01 \x01(\tR\x06keyRef\x12\x1e\n" +
+	"\bkey_size\x18\x03 \x01(\x05R\akeySize\"@\n" +
+	"\x0eEncryptRequest\x12\x1c\n" +
+	"\tplaintext\x18\x01 \x01(\fR\tplaintext\x12\x10\n" +
+	"\x03seq\x18\x02 \x01(\x04R\x03seq\"Y\n" +
+	"\x0fEncryptResponse\x12\x1e\n" +
 	"\n" +
-	"ciphertext\x18\x02 \x01(\fR\n" +
+	"ciphertext\x18\x01 \x01(\fR\n" +
 	"ciphertext\x12\x10\n" +
-	"\x03seq\x18\x03 \x01(\x04R\x03seq\x12\x14\n" +
-	"\x05error\x18\x04 \x01(\tR\x05error\"[\n" +
-	"\x0eDecryptRequest\x12\x17\n" +
-	"\akey_ref\x18\x01 \x01(\tR\x06keyRef\x12\x1e\n" +
+	"\x03seq\x18\x02 \x01(\x04R\x03seq\x12\x14\n" +
+	"\x05error\x18\x03 \x01(\tR\x05error\"B\n" +
+	"\x0eDecryptRequest\x12\x1e\n" +
 	"\n" +
-	"ciphertext\x18\x02 \x01(\fR\n" +
+	"ciphertext\x18\x01 \x01(\fR\n" +
 	"ciphertext\x12\x10\n" +
-	"\x03seq\x18\x03 \x01(\x04R\x03seq\"p\n" +
-	"\x0fDecryptResponse\x12\x17\n" +
-	"\akey_ref\x18\x01 \x01(\tR\x06keyRef\x12\x1c\n" +
-	"\tplaintext\x18\x02 \x01(\fR\tplaintext\x12\x10\n" +
-	"\x03seq\x18\x03 \x01(\x04R\x03seq\x12\x14\n" +
-	"\x05error\x18\x04 \x01(\tR\x05error2\xf5\x02\n" +
+	"\x03seq\x18\x02 \x01(\x04R\x03seq\"W\n" +
+	"\x0fDecryptResponse\x12\x1c\n" +
+	"\tplaintext\x18\x01 \x01(\fR\tplaintext\x12\x10\n" +
+	"\x03seq\x18\x02 \x01(\x04R\x03seq\x12\x14\n" +
+	"\x05error\x18\x03 \x01(\tR\x05error2\xf5\x02\n" +
 	"\x11EncryptionService\x12N\n" +
 	"\aEncrypt\x12\x1d.encryption.v1.EncryptRequest\x1a\x1e.encryption.v1.EncryptResponse\"\x00(\x010\x01\x12N\n" +
 	"\aDecrypt\x12\x1d.encryption.v1.DecryptRequest\x1a\x1e.encryption.v1.DecryptResponse\"\x00(\x010\x01\x12b\n" +

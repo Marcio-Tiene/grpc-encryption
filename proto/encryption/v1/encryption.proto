@@ -34,37 +34,29 @@ message RotateKeyPairRequest {
 }
 
 message EncryptRequest {
-
-  string key_ref = 1;
-
-  bytes plaintext = 2;
-
-  uint64 seq = 3;
+  // Data chunk to encrypt
+  bytes plaintext = 1;
+  
+  // Sequence number for ordering
+  uint64 seq = 2;
 }
 
 message EncryptResponse {
-  string key_ref = 1;
-
-  bytes ciphertext = 2;
-
-  uint64 seq = 3;
-
-  string error = 4;
+  bytes ciphertext = 1;
+  uint64 seq = 2;
+  string error = 3;
 }
 
 message DecryptRequest {
-
-  string key_ref = 1;
-
-  bytes ciphertext = 2;
-  uint64 seq = 3;
+  // Data chunk to decrypt
+  bytes ciphertext = 1;
+  
+  // Sequence number for ordering
+  uint64 seq = 2;
 }
 
 message DecryptResponse {
-
-  string key_ref = 1;
-
-  bytes plaintext = 2;
-  uint64 seq = 3;
-  string error = 4;
+  bytes plaintext = 1;
+  uint64 seq = 2;
+  string error = 3;
 }
